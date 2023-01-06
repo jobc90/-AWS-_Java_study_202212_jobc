@@ -7,6 +7,8 @@ public class J12_UserMain {
 		
 		service.run();
 		service.stop();
+		
+		System.out.println("나도 코드 수정");
 
 	}
 
