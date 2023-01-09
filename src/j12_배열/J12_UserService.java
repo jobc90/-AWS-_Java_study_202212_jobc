@@ -218,6 +218,7 @@ public class J12_UserService {
 	private boolean updateMenu(J12_User user, char select) {
 		boolean flag = true;
 		
+		
 		if(isBack(select)) {
 			flag = false;
 			
