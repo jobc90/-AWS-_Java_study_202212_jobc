@@ -5,10 +5,10 @@ public class J09_Student {
 	String name;
 	int age;
 	
-	// 기본생성자
-//	J09_Student(){
-//		System.out.println("생성됨!");
-//	}
+	// 기본생성자 (생략되어 있음)
+	J09_Student(){
+		System.out.println("생성됨!");
+	}
 	
 	void printInfo() {
 		System.out.println("이름: " + name);
