@@ -21,6 +21,7 @@ public class ObjectEquals {
 		Student s2 = new Student("박춘봉", 24);
 		SubStudent s3 = new SubStudent("박춘봉", 24);
 		
+
 		
 		System.out.println(s1.equals(s2));
 		
