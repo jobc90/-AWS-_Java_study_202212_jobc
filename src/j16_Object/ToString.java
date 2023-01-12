@@ -25,3 +25,13 @@ public class ToString {
 		}
 
 }
+//System.out.println(student1);
+//System.out.println(student2);
+//System.out.println(student3);
+//System.out.println(student4);
+//는 
+//System.out.println(student1.toString());
+//System.out.println(student2.toString());
+//System.out.println(student3.toString());
+//System.out.println(student4.toString());
+//와 같은 내용인데, .toString()이 생략되어있는 형태이다.
