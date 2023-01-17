@@ -8,6 +8,7 @@ public class ArrayException {
 		
 		try {
 			throw new NullPointerException(); //강제로 예외로 만들기
+											//주소가 null이다.
 		
 //		for(int i = 0; i < 6; i++) {
 //			System.out.println(nums[i]);
