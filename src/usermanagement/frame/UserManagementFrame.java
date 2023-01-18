@@ -1,29 +1,36 @@
 package usermanagement.frame;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import windowbuilder.view.panel.RegisterPanel;
-
 import java.awt.CardLayout;
 import java.awt.Color;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import java.awt.EventQueue;
 import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import java.awt.event.ActionListener;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextPane;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.SystemColor;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
+
+import com.google.gson.JsonObject;
+
+import usermanagement.service.UserService;
 
 public class UserManagementFrame extends JFrame {
+	
+	private List<JTextField> loginFields;
+	private List<JTextField> registerFields;
 
 	private CardLayout mainCard;
 	private JPanel mainPanel;
@@ -32,7 +39,7 @@ public class UserManagementFrame extends JFrame {
 	private JTextField registerUserNameField;
 	private JPasswordField registerPasswordField;
 	private JTextField registerNameField;
-	private JTextField registerEmainField;
+	private JTextField registerEmailField;
 
 	/**
 	 * Launch the application.
@@ -54,6 +61,10 @@ public class UserManagementFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public UserManagementFrame() {
+		loginFields = new ArrayList<>();
+		registerFields = new ArrayList<>();
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 400, 500);
 		mainPanel = new JPanel();
@@ -65,7 +76,6 @@ public class UserManagementFrame extends JFrame {
 		mainPanel.setLayout(mainCard);
 		
 		JPanel loginPanel = new JPanel();
-		loginPanel.setOpaque(false);			//투명도 설정
 		loginPanel.setBackground(new Color(255, 255, 255));
 		
 		mainPanel.add(loginPanel, "loginPanel");
@@ -74,13 +84,13 @@ public class UserManagementFrame extends JFrame {
 		JLabel logoText = new JLabel("User Management");
 		logoText.setHorizontalAlignment(SwingConstants.CENTER);
 		logoText.setFont(new Font("CookieRun Bold", Font.BOLD, 20));
-		logoText.setBounds(80, 34, 222, 74);
+		logoText.setBounds(80, 21, 222, 74);
 		loginPanel.add(logoText);
 		
 		JLabel logoText2 = new JLabel("Login");
 		logoText2.setFont(new Font("CookieRun Regular", Font.ITALIC, 18));
 		logoText2.setHorizontalAlignment(SwingConstants.CENTER);
-		logoText2.setBounds(137, 84, 92, 42);
+		logoText2.setBounds(137, 71, 92, 42);
 		loginPanel.add(logoText2);
 		
 		userNameField = new JTextField();
@@ -94,6 +104,11 @@ public class UserManagementFrame extends JFrame {
 		loginPanel.add(passwordField);
 		
 		JButton login = new JButton("Login");
+		login.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
 		login.setBackground(new Color(128, 128, 255));
 		login.setFont(new Font("CookieRun Bold", Font.BOLD, 18));
 		login.addActionListener(new ActionListener() {
@@ -153,6 +168,7 @@ public class UserManagementFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				mainCard.show(mainPanel, "loginPanel");
+				clearFields(registerFields);
 			}
 		});
 		registerBackMainPanel.setBounds(137, 402, 97, 25);
@@ -161,66 +177,112 @@ public class UserManagementFrame extends JFrame {
 		JLabel registerlogoText1 = new JLabel("User Management");
 		registerlogoText1.setHorizontalAlignment(SwingConstants.CENTER);
 		registerlogoText1.setFont(new Font("CookieRun Bold", Font.BOLD, 20));
-		registerlogoText1.setBounds(80, 34, 222, 74);
+		registerlogoText1.setBounds(80, 10, 222, 74);
 		registerPanel.add(registerlogoText1);
 		
 		JLabel registerlogoText2 = new JLabel("Register");
 		registerlogoText2.setHorizontalAlignment(SwingConstants.CENTER);
 		registerlogoText2.setFont(new Font("CookieRun Regular", Font.ITALIC, 18));
-		registerlogoText2.setBounds(137, 84, 92, 42);
+		registerlogoText2.setBounds(137, 60, 92, 42);
 		registerPanel.add(registerlogoText2);
 		
 		JTextPane registerUserName = new JTextPane();
 		registerUserName.setText("Username");
 		registerUserName.setFont(new Font("CookieRun Regular", Font.PLAIN, 10));
-		registerUserName.setBounds(49, 135, 110, 23);
+		registerUserName.setBounds(49, 120, 110, 23);
 		registerPanel.add(registerUserName);
 		
 		registerUserNameField = new JTextField();
 		registerUserNameField.setColumns(10);
-		registerUserNameField.setBounds(49, 158, 253, 30);
+		registerUserNameField.setBounds(49, 143, 253, 30);
 		registerPanel.add(registerUserNameField);
 		
 		JTextPane registerPassword = new JTextPane();
 		registerPassword.setText("Password");
 		registerPassword.setFont(new Font("CookieRun Regular", Font.PLAIN, 10));
-		registerPassword.setBounds(49, 186, 110, 23);
+		registerPassword.setBounds(49, 171, 110, 23);
 		registerPanel.add(registerPassword);
 		
 		registerPasswordField = new JPasswordField();
 		registerPasswordField.setToolTipText("password");
-		registerPasswordField.setBounds(49, 209, 253, 30);
+		registerPasswordField.setBounds(49, 194, 253, 30);
 		registerPanel.add(registerPasswordField);
 		
 		JTextPane registerName = new JTextPane();
 		registerName.setText("Name");
 		registerName.setFont(new Font("CookieRun Regular", Font.PLAIN, 10));
-		registerName.setBounds(49, 240, 110, 23);
+		registerName.setBounds(49, 225, 110, 23);
 		registerPanel.add(registerName);
 		
 		registerNameField = new JTextField();
 		registerNameField.setColumns(10);
-		registerNameField.setBounds(49, 263, 253, 30);
+		registerNameField.setBounds(49, 248, 253, 30);
 		registerPanel.add(registerNameField);
 		
 		JTextPane registerEmail = new JTextPane();
 		registerEmail.setText("E-mail");
 		registerEmail.setFont(new Font("CookieRun Regular", Font.PLAIN, 10));
-		registerEmail.setBounds(49, 293, 110, 23);
+		registerEmail.setBounds(49, 278, 110, 23);
 		registerPanel.add(registerEmail);
 		
-		registerEmainField = new JTextField();
-		registerEmainField.setColumns(10);
-		registerEmainField.setBounds(49, 318, 253, 30);
-		registerPanel.add(registerEmainField);
+		registerEmailField = new JTextField();
+		registerEmailField.setColumns(10);
+		registerEmailField.setBounds(49, 303, 253, 30);
+		registerPanel.add(registerEmailField);
 		
-		JButton registerUser = new JButton("Register");
-		registerUser.setBackground(new Color(128, 128, 255));
-		registerUser.addActionListener(new ActionListener() {
+		JButton registerButton = new JButton("Register");
+		registerButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JsonObject userJson = new JsonObject();
+				userJson.addProperty("username", registerUserNameField.getText());
+				userJson.addProperty("password", registerPasswordField.getText());
+				userJson.addProperty("name", registerNameField.getText());
+				userJson.addProperty("email", registerEmailField.getText());
+				
+				System.out.println(userJson.toString());
+				
+				UserService userService = UserService.getInstance();
+				
+				Map<String, String> response = userService.register(userJson.toString());
+				
+				if(response.containsKey("error")) {
+					JOptionPane.showMessageDialog(null, response.get("error"), "error", JOptionPane.ERROR_MESSAGE);					
+					return;
+				}
+				
+				JOptionPane.showMessageDialog(null, response.get("sucess"), "sucess", JOptionPane.INFORMATION_MESSAGE);
+				mainCard.show(mainPanel, "loginPanel");
+				clearFields(registerFields);
+				
+			}
+		});
+	
+		registerButton.setBackground(new Color(128, 128, 255));
+		registerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		registerUser.setBounds(137, 369, 97, 23);
-		registerPanel.add(registerUser);
+		registerButton.setBounds(137, 369, 97, 23);
+		registerPanel.add(registerButton);
+		
+		loginFields.add(userNameField);
+		loginFields.add(passwordField);
+		
+		registerFields.add(registerEmailField);
+		registerFields.add(registerNameField);
+		registerFields.add(registerUserNameField);
+		registerFields.add(registerPasswordField);
+		
+		
+	}
+	
+	private void clearFields(List<JTextField> texFields) {
+		for(JTextField field : texFields) {
+			if(field.getText().isEmpty()) {
+				continue;
+			}
+			field.setText("");
+		}
 	}
 }
