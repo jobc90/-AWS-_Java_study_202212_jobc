@@ -87,6 +87,7 @@ where
 
 set profiling = 1;
 set profiling_history_size = 30;
+show profiles;
 
     
 
