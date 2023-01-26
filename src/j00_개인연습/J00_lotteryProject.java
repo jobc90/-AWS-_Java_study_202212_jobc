@@ -1,10 +1,14 @@
 package j00_개인연습;
 
 public class J00_lotteryProject {
-
 	public static void main(String[] args) {
-
-		System.out.println("이번 주 로또번호 추첨입니다.");
+		char char_a = 'a';
+		int num = (int) char_a;
+		
+		char char_b = (char) (num +1);
+		
+		System.out.println((int)char_b);
+		System.out.println('a' + 1);
 	}
-
 }
+
