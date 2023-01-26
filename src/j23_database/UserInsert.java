@@ -40,7 +40,7 @@ public class UserInsert {
 			preparedStatement.setString(3, user.getName());
 			preparedStatement.setString(4, user.getEmail());
 			
-			successCount = preparedStatement.executeUpdate(); // insert, update, delete 명령을 실행
+			successCount = preparedStatement.executeUpdate(); // 쿼리에 insert, update, delete 명령을 실행
 			
 			resultSet = preparedStatement.getGeneratedKeys();
 			
@@ -70,10 +70,11 @@ public class UserInsert {
 		try {
 			
 			connection = pool.getConnection();
-			List<Integer> roles = (List<Integer>) map.get("roles");
-			User user = (User) map.get("user");
+			List<Integer> roles = (List<Integer>) map.get("roles");//map을쓰면 다운캐스팅을 해도 명확하게 값을 꺼낼 수 있다.
+																	//list를 썼다면 다운캐스팅했을때 user가 꺼내졌을것
+			User user = (User) map.get("user");						
 			
-			sql = "insert into role_dtl\r\n"
+			sql = "insert into role_dtl\r\n"				//여기서부터
 					+ "values ";
 			
 			for(int i = 0; i < roles.size(); i++) {
@@ -81,7 +82,7 @@ public class UserInsert {
 				if(i <roles.size() - 1) {
 					sql += ",";
 				}
-			}
+			}												//여기까지 쿼리문 작성
 			
 			preparedStatement = connection.prepareStatement(sql);
 			
@@ -121,7 +122,8 @@ public class UserInsert {
 //		System.out.println(user);
 		
 /*================================================================================*/
-		
+		//list를 쓰는 경우 - 반복을 돌려서 안에 있는 값을 다 꺼낼때
+		//map을 쓰는 경우 - 지정해준 key값이 있을 때, 임시 entity 객체, 반복목적으로는 잘 안쓴다. //원하는 값을 꺼낼때?
 		List<Integer> roleIdList = new ArrayList<>();
 		roleIdList.add(1);
 		roleIdList.add(2);
