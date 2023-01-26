@@ -1,7 +1,6 @@
 package usermanagement.service;
 
 import java.util.HashMap;
-
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -10,13 +9,8 @@ import org.mindrot.jbcrypt.BCrypt;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import lombok.Builder;
-import lombok.Data;
-import usermanagement.entity.RoleDtl;
 import usermanagement.entity.User;
 import usermanagement.repository.UserRepository;
-
-
 
 public class UserService {
 	
@@ -33,7 +27,7 @@ public class UserService {
 	}
 
 	private UserService() {
-		userRepository = UserRepository.getIstance();
+		userRepository = UserRepository.getInstance();
 		gson = new GsonBuilder().setPrettyPrinting().create();
 	}
 	
@@ -64,21 +58,11 @@ public class UserService {
 		}
 		
 		user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
-		System.out.println("비밀번호 암호화 성공!");
+		System.out.println("비밀번호 암호화 성공");
 		
 		userRepository.saveUser(user);
-		System.out.println("유저 생성 성공!");
 		
-		RoleDtl roleDtl = RoleDtl.builder()
-				.roleId(3)
-				.userId(user.getUserId())
-				.build();
-		
-		userRepository.saveRoleDtl(roleDtl);
-		System.out.println("권한부여 성공!");
-		
-		response.put("success", "회원가입 완료.");
-	
+		response.put("success", "회원가입 성공");
 		
 		return response;
 
