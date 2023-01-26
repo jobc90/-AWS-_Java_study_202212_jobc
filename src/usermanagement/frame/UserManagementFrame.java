@@ -265,7 +265,7 @@ public class UserManagementFrame extends JFrame {
 					return;
 				}
 				
-				JOptionPane.showMessageDialog(null, response.get("sucess"), "sucess", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, response.get("success"), "success", JOptionPane.INFORMATION_MESSAGE);
 				mainCard.show(mainPanel, "loginPanel");
 				clearFields(registerFields);
 				
