@@ -1,23 +1,22 @@
 package j20_JSON.builder;
 
-import lombok.AllArgsConstructor;
+
 import lombok.Builder;
-import lombok.Data;
 
 
-@Data
 @Builder
+
 public class User {
 	private String username;
 	private String password;
 	private String name;
 	private String email;
-//	
-//	밑의 주석 내용 + @AllArgsConstructor 어노테이션을 포함하는게 @Builder 어노테이션이다.
-//	public static UserBuilder builder() {
-//		return new UserBuilder();
-//	}
-//	
+////	
+////	밑의 주석 내용 + @AllArgsConstructor 어노테이션을 포함하는게 @Builder 어노테이션이다.
+////	public static UserBuilder builder() {
+////		return new UserBuilder();
+////	}
+////	
 //	@Data
 //	public static class UserBuilder {
 //		private String username;
@@ -44,12 +43,11 @@ public class User {
 //			this.email = email;
 //			return this;
 //		}
-//		
-//		
-//		public User build() {
-//			return new User(username, password, name, email);
-//		}
-//	}
-//	
-//
-	}
+		
+		
+		public User build() {
+			return new User(username, password, name, email);
+		}
+}
+	
+
