@@ -9,7 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Lambda2 {
 	
@@ -100,8 +104,51 @@ public class Lambda2 {
 		});
 		
 		
-
+		// 4. Function<T, R>
+		//parameter 타입과 return타입이 있다.(입력과 출력이 있다.)
+		Function<String, Integer> h = num -> Integer.parseInt(num);
 		
+		int convertStrNum1 = h.apply("10000");
+		int convertStrNum2 = h.apply("20000");
+		
+		System.out.println(convertStrNum1 + convertStrNum2);
+		
+		// 5. Predicate<T>
+		Predicate<String> p = str -> str.startsWith("김");
+		Predicate<String> p2 = str -> str.startsWith("이");
+		
+		System.out.println(p.or(p2).test("조병철"));
+		System.out.println();
+		
+		Function<Predicate<String>, Boolean> function1 =
+				predicate -> predicate.or(str -> str.startsWith("이")).test("김준일");
+		
+		boolean rs = function1.apply(str -> str.startsWith("김"));
+		System.out.println(rs);
+		System.out.println();
+		
+		List<String> nameList = new ArrayList<>();
+		nameList.add("손흥민");
+		nameList.add("황희찬");
+		nameList.add("김민재");
+		nameList.add("이강인");
+		
+		// 스트림 -> 일회용
+		Stream<String> stream = nameList.stream().filter(name -> name.startsWith("김"));
+//		stream.forEach(name -> System.out.println(name));
+		
+
+		List<String> newList = stream.collect(Collectors.toList());
+		
+		newList.forEach(str -> System.out.println(str));
+		System.out.println("=========================================================");
+		
+		//위의 코드를 한줄로 작성하면
+		nameList.stream()
+			.filter(name -> name.startsWith("이"))
+			.collect(Collectors.toList())
+			.forEach(name -> System.out.println(name));
+	
 		
 	}
 
