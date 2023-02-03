@@ -22,7 +22,7 @@ public class MapList2 {
 		size.add("L");
 		size.add("XL");
 		
-		Map<String, List<String>> options = new HashMap<String, List<String>>();
+		Map<String, List<String>> options = new HashMap<>();
 		options.put("색상", colors);
 		options.put("사이즈", size);
 		
