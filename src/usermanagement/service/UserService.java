@@ -77,7 +77,7 @@ public class UserService {
 		userRepository.saveRoleDtl(roleDtl);
 		System.out.println("권한부여 성공!");
 		
-		response.put("success", "회원가입 완료.");
+		response.put("ok", "회원가입 완료.");
 	
 		
 		return response;
@@ -117,7 +117,7 @@ public class UserService {
 			response.put("error", "사용자 정보를 확인해주세요.");
 			return response;
 		}
-		response.put("success", user.getName() + "님 환영합니다.");
+		response.put("ok", user.getName() + "님 환영합니다.");
 		return response;
 	}
 
