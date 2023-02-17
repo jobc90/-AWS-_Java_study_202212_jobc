@@ -60,6 +60,7 @@ class ConnectedSocket extends Thread {
 							connectedUsers.add(connectedSocket.getUsername());
 						}
 						
+						
 						JoinRespDto joinRespDto = new JoinRespDto(username + "님이 접속하였습니다.", connectedUsers);
 			
 						sendToAll(requestDto.getResource(), "ok", gson.toJson(joinRespDto));
