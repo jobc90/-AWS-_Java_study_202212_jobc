@@ -110,9 +110,9 @@ def combi_pool(pool, r):
         r.append(set(b_i))
     f = []
     for r_i in r:
-        f.append(r_i)
-        while r_i in r:
-            r.remove(r_i)
-    if r:
-        f.append(r[0])
+        if r_i not in f:
+            f.append(r_i)
     return len(f), f
+
+def normal(x, mu=0, sigma=1):
+    return (1/np.sqrt(2*np.pi)*sigma) * np.exp(-0.5*(((x-mu)/sigma)**2))
