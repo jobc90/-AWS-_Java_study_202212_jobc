@@ -116,3 +116,39 @@ def combi_pool(pool, r):
 
 def normal(x, mu=0, sigma=1):
     return (1/np.sqrt(2*np.pi)*sigma) * np.exp(-0.5*(((x-mu)/sigma)**2))
+
+def read_data():
+    raw_data=[]
+    with open ('가스공급량_20230217170926.csv') as f:
+        for line in f:
+            raw_data.append(line[:-1].split(','))
+        np_data = np.array(raw_data[2:])
+        np_data = np_data[:, 2:].astype(np.int64)
+        return np_data
+
+def get_corr(np_data):
+    by_year = np.add.reduceat(np_data, np.arange(10, 130, 12))
+    return np.corrcoef(by_year[:, 1], by_year[:, 5])
+
+
+
+def fetch_uci_data(url):
+    d = requests.get(url)
+    t = []
+    for line in d.text.split('\n'):
+        if len(line) !=0:
+            t.append(line.split(','))
+    return np.array(t)
+    
+def get_corr(d):
+    male_filter = (d[:, 0]=='M')
+    male_samples = d[male_filter]
+    male_length = male_samples[:, 1].astype(np.float64)
+    male_diameter = male_samples[:, 2].astype(np.float64)
+    return np.corrcoef(male_length, male_diameter)
+
+def check_split(list_data):
+    t = set()
+    for e in list_data:
+        t.add(len(e))
+    return len(t)
